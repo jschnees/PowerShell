@@ -11,7 +11,10 @@ $currentDirectory = (Get-Location).path
 $CurrentDate = (Get-Date)
 
 # file extension to search for and move
-$findExtension = '*.dwg'
+$extension = '*.dwg'
+
+# destination path
+$src = $currentDirectory + "\*" + $extension
 
 # Checks to see if a current date folder exists. If not then create one.
 if (Test-Path $CurrentDate) {
@@ -25,8 +28,8 @@ if (Test-Path $CurrentDate) {
 if (Test-Path $CurrentDate) {
     throw "Folder Not Found"
 } else {
-    foreach ($findExtension in $currentDirectory){
+    foreach ($extention in $currentDirectory){
         # move specified file type to newly created folder
-        move-item -path .$findExtension -destination $destination –confirm
+        Move-Item $src -Destination $destination
     }
 }
