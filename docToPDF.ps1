@@ -1,4 +1,6 @@
-﻿$documents_path = 'C:\Users\jschnees\Desktop\plots\docs'
+## this creates pdfs from word documents files
+
+$documents_path = 'C:\'
 
 $word_app = New-Object -ComObject Word.Application
 
