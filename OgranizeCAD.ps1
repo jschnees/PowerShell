@@ -1,13 +1,12 @@
-# 1. Get a list of files in the d:\queries folder
-$FileList = Get-ChildItem -Path d:\queries;
+$sourceFolder = 
+Get-ChildItem $sourceFolder -Filter *.DWG | Where-Object {!$_.PSIsContainer} | Foreach-Object{
 
-# 2. Parse file names, create folder structure, and move files
-foreach ($File in $FileList) {
-    $File.Name -match '(?<folder>.*?)(?:_)(?<subfolder>\w{2})(?:_)(?<filename>.*)';
-    if ($matches) {
-        $Destination = 'd:\queries\{0}\{1}\{2}' -f $matches.folder, $matches.subfolder, $matches.filename;
-        mkdir -Path (Split-Path -Path $Destination -Parent) -ErrorAction SilentlyContinue;
-        Move-Item -Path $File.FullName -Destination $Destination -WhatIf;
+    $dest = Join-Path $_.DirectoryName $_.BaseName.Split()[0]
+
+    if(!(Test-Path -Path $dest -PathType Container))
+    {
+        $null = md $dest
     }
-    $matches = $null
+
+    $_ | Move-Item -Destination $dest -Force
 }
