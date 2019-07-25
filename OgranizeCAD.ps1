@@ -1,3 +1,5 @@
+## Organizes files based on file name
+## Creates a folder based of file name then moves said file with same name into the folder
 $sourceFolder = 
 Get-ChildItem $sourceFolder -Filter *.DWG | Where-Object {!$_.PSIsContainer} | Foreach-Object{
 
